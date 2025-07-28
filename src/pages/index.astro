@@ -19,3 +19,9 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
         <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
     </p>
 </Layout>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/qg-sw.8661203bf4223e4bd225.js');
+    }
+</script>
