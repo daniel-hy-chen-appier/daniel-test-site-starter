@@ -22,13 +22,13 @@ import Markdown from '../components/Markdown.astro';
                 {
                     scenarioId: 'hEtzh8MBoGc65hX9xAPb55'
                 },
-                function (response) {
-                    console.log('[debug]get recommendation data:', response);
+                function (err, RecommendationData, RecommendationMeta) {
+                    console.log('[debug]get recommendation data:', RecommendationData);
 
-                    renderRecommendations(response.items);
+                    renderRecommendations(RecommendationData.items);
                     appier('event', 'recommendation_impression', {
                         scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                        items: response.items.map((r) => r.productId)
+                        items: RecommendationData.items.map((r) => r.productId)
                     });
                 }
             );
