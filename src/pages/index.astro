@@ -24,14 +24,13 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
             platform: 'WEB'
         });
         appier('getRecommendationByScenario', {
-            scenario: 'test homepage', // 向 Appier 設定的情境名稱
             scenarioId: 'LTt6bgqroyaJCdcJQfd5Wt',
             callback: function (response) {
                 console.log('取得推薦資料:', response);
 
                 renderRecommendations(response);
                 appier('event', 'recommendation_impression', {
-                    scenario: 'your_scenario_name',
+                    scenarioId: 'LTt6bgqroyaJCdcJQfd5Wt',
                     items: res.recommendations.map((r) => r.item_id)
                 });
             }
