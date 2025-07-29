@@ -29,6 +29,7 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
             onSuccess: (products) => {
                 const container = document.getElementById('recommendation-list');
                 if (container && products?.length) {
+                    console.log('Recommended products:', products);
                     container.innerHTML = products.map((item) => `<li>${item.name}</li>`).join('');
                 }
                 window.RecommendationSDK?.trackEvent('recommendation_impression', {
