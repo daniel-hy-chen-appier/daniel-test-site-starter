@@ -26,10 +26,10 @@ import Markdown from '../components/Markdown.astro';
                     console.log('[debug] error:', err);
                     console.log('[debug]get recommendation data:', RecommendationData);
                     console.log('[debug]get recommendation meta:', RecommendationMeta);
-                    renderRecommendations(RecommendationData.items);
+                    renderRecommendations(RecommendationData);
                     appier('event', 'recommendation_impression', {
                         scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                        items: RecommendationData.items.map((r) => r.productId)
+                        items: RecommendationData.map((r) => r.productId)
                     });
                 }
             );
