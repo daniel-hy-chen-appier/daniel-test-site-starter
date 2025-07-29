@@ -20,12 +20,13 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
     </p>
     <script>
         appier('init', {
-            app_id: '你的 Appier APP ID', // 這個很重要，需向 Appier 拿
+            app_id: '41a20648e34aaaad4d7e', // 這個很重要，需向 Appier 拿
             user_id: '12345', // 登入使用者 ID（未登入可省略）
             platform: 'WEB'
         });
         appier('send', 'recommendation', {
-            scenario: 'homepage_recommend', // 向 Appier 設定的情境名稱
+            scenario: 'test homepage', // 向 Appier 設定的情境名稱
+            scenario_id: 'LTt6bgqroyaJCdcJQfd5Wt',
             callback: function (response) {
                 console.log('取得推薦資料:', response);
 
