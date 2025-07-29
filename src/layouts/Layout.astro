@@ -50,6 +50,25 @@ const { title } = Astro.props;
         h = g.getElementsByTagName(r)[0];
         h.parentNode.insertBefore(p, h);
     })(window, document, 'script', 'https://cdn-stg-gcp-jp0.aiqua.io/qgraph.41a20648e34aaaad4d7e.js');
+    function loadRecommendation() {
+        if (!window.qg) return setTimeout(loadRecommendation, 100);
+        window.qg('recommendation', {
+            scenario: 'recommendation scenario,',
+            user_id: 'USER_ID',
+            num: 5,
+            callback: function (res) {
+                const container = document.getElementById('recommendation-list');
+                if (container && res && res.data && res.data.items) {
+                    container.innerHTML = res.data.items.map((item) => `<li>${item.title || item.name || JSON.stringify(item)}</li>`).join('');
+                }
+                window.qg('event', 'recommendation_impression', {
+                    scenario: 'YOUR_SCENARIO_NAME',
+                    items: res.data.items.map((item) => item.id)
+                });
+            }
+        });
+    }
+    loadRecommendation();
 </script>
 
 <script>
