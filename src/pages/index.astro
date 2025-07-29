@@ -30,11 +30,11 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
                     setTimeout(() => waitForAppierReady(callback), 100);
                 }
             }
+            appier('init', {
+                app_id: '41a20648e34aaaad4d7e',
+                platform: 'WEB'
+            });
             waitForAppierReady(() => {
-                appier('init', {
-                    app_id: '41a20648e34aaaad4d7e',
-                    platform: 'WEB'
-                });
                 appier('getRecommendationByScenario', {
                     scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                     callback: function (response) {
