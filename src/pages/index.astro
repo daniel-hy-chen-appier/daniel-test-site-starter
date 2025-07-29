@@ -24,13 +24,13 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
             platform: 'WEB'
         });
         appier('getRecommendationByScenario', {
-            scenarioId: 'LTt6bgqroyaJCdcJQfd5Wt',
+            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
             callback: function (response) {
                 console.log('取得推薦資料:', response);
 
                 renderRecommendations(response);
                 appier('event', 'recommendation_impression', {
-                    scenarioId: 'LTt6bgqroyaJCdcJQfd5Wt',
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                     items: res.recommendations.map((r) => r.item_id)
                 });
             }
