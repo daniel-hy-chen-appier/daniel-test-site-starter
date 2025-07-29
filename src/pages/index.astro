@@ -13,8 +13,11 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
 
 <Layout title="Welcome to Astro.">
     <ContextAlert class="mb-8" />
-    <h1 class="mb-10">Netlify Platform Testing</h1>
-
+    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
+    <Markdown content={explainer} class="mb-10 text-lg" />
+    <p>
+        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
+    </p>
     <div class="mt-10">
         <h2 class="mb-4">Recommendations</h2>
         <div id="rec-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -22,34 +25,28 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
         </div>
         <script>
             function waitForAppierReady(callback) {
-                console.log('typeof appier:', typeof appier);
-                console.log('callmethod of appier:', appier.callmethod);
                 if (typeof appier === 'function' && appier.callmethod) {
                     callback();
                 } else {
-                    console.log('[debug] appier not ready yet...');
                     setTimeout(() => waitForAppierReady(callback), 100);
                 }
             }
-
             waitForAppierReady(() => {
-                console.log('[debug] calling getRecommendationByScenario...');
-
                 appier('init', {
                     app_id: '41a20648e34aaaad4d7e',
                     platform: 'WEB'
                 });
-
                 appier('getRecommendationByScenario', {
                     scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                     callback: function (response) {
-                        console.log('[debug] recommendation callback triggered!');
-                        console.log(response);
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
 
-                        // Optional: 渲染商品
-                        renderRecommendations(response.recommendations);
-
-                        // Optional: impression event
+                        renderRecommendations(response);
                         appier('event', 'recommendation_impression', {
                             scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                             items: response.recommendations.map((r) => r.item_id)
@@ -57,18 +54,1646 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
                     }
                 });
             });
-
             function renderRecommendations(items) {
                 const container = document.getElementById('rec-list');
-                if (!container || !items) return;
                 container.innerHTML = items
                     .map(
                         (item) => `
-        <div class="product">
-            <img src="${item.image}" alt="${item.title}" />
-            <p>${item.title}</p>
-        </div>
-    `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('沒有推薦資料：', response);
+                            return;
+                        }
+                        console.log('get recommendation data');
+                        console.log('取得推薦資料:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                    )
+                    .join('');
+            }
+        </script><script>
+            function waitForAppierReady(callback) {
+                console.log('[debug] waitForAppierReady called');
+                console.log('[debug] typeof appier:', typeof appier);
+                console.log('[debug] appier.callmethod:', appier.callmethod);
+                if (typeof appier === 'function' && appier.callmethod) {
+                    callback();
+                } else {
+                    setTimeout(() => waitForAppierReady(callback), 100);
+                }
+            }
+            waitForAppierReady(() => {
+                appier('init', {
+                    app_id: '41a20648e34aaaad4d7e',
+                    platform: 'WEB'
+                });
+                appier('getRecommendationByScenario', {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    callback: function (response) {
+                        if (!response || !response.recommendations || response.recommendations.length === 0) {
+                            console.warn('not recommendation data:', response);
+                            return;
+                        }
+                        console.log('get recommendation data:', response);
+
+                        renderRecommendations(response);
+                        appier('event', 'recommendation_impression', {
+                            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                            items: response.recommendations.map((r) => r.item_id)
+                        });
+                    }
+                });
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
                     )
                     .join('');
             }
