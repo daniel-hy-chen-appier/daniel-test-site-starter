@@ -28,25 +28,29 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
                 if (typeof appier === 'function' && appier.callmethod) {
                     callback();
                 } else {
+                    console.log('[debug] appier not ready yet...');
                     setTimeout(() => waitForAppierReady(callback), 100);
                 }
             }
+
             waitForAppierReady(() => {
+                console.log('[debug] calling getRecommendationByScenario...');
+
                 appier('init', {
                     app_id: '41a20648e34aaaad4d7e',
                     platform: 'WEB'
                 });
+
                 appier('getRecommendationByScenario', {
                     scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                     callback: function (response) {
-                        if (!response || !response.recommendations || response.recommendations.length === 0) {
-                            console.warn('沒有推薦資料：', response);
-                            return;
-                        }
-                        console.log('get recommendation data');
-                        console.log('取得推薦資料:', response);
+                        console.log('[debug] recommendation callback triggered!');
+                        console.log(response);
 
-                        renderRecommendations(response);
+                        // Optional: 渲染商品
+                        renderRecommendations(response.recommendations);
+
+                        // Optional: impression event
                         appier('event', 'recommendation_impression', {
                             scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                             items: response.recommendations.map((r) => r.item_id)
@@ -54,16 +58,18 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
                     }
                 });
             });
+
             function renderRecommendations(items) {
                 const container = document.getElementById('rec-list');
+                if (!container || !items) return;
                 container.innerHTML = items
                     .map(
                         (item) => `
-            <div class="product">
-                <img src="${item.image}" alt="${item.title}" />
-                <p>${item.title}</p>
-            </div>
-        `
+        <div class="product">
+            <img src="${item.image}" alt="${item.title}" />
+            <p>${item.title}</p>
+        </div>
+    `
                     )
                     .join('');
             }
