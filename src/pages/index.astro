@@ -18,28 +18,35 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
     <p>
         <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
     </p>
-    <section>
-        <h2 class="mb-4">推薦商品</h2>
-        <ul id="recommendation-list" class="space-y-2"></ul>
-    </section>
+    <script>
+        appier('init', {
+            app_id: '你的 Appier APP ID', // 這個很重要，需向 Appier 拿
+            user_id: '12345', // 登入使用者 ID（未登入可省略）
+            platform: 'WEB'
+        });
+        appier('send', 'recommendation', {
+            scenario: 'homepage_recommend', // 向 Appier 設定的情境名稱
+            callback: function (response) {
+                console.log('取得推薦資料:', response);
 
-    <script type="module" client:load>
-        window.RecommendationSDK?.getRecommendations({
-            scenario: 'homepage',
-            onSuccess: (products) => {
-                const container = document.getElementById('recommendation-list');
-                if (container && products?.length) {
-                    console.log('Recommended products:', products);
-                    container.innerHTML = products.map((item) => `<li>${item.name}</li>`).join('');
-                }
-                window.RecommendationSDK?.trackEvent('recommendation_impression', {
-                    scenario: 'homepage',
-                    items: products.map((p) => p.id)
-                });
-            },
-            onError: (err) => {
-                console.error('Recommendation error:', err);
+                // 渲染推薦商品
+                renderRecommendations(response);
+
+                // Impression event 會自動觸發（有時需手動，看你們設法）
             }
         });
+        function renderRecommendations(items) {
+            const container = document.getElementById('rec-list');
+            container.innerHTML = items
+                .map(
+                    (item) => `
+            <div class="product">
+                <img src="${item.image}" alt="${item.title}" />
+                <p>${item.title}</p>
+            </div>
+        `
+                )
+                .join('');
+        }
     </script>
 </Layout>
