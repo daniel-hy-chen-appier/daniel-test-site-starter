@@ -31,6 +31,7 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
             appier('getRecommendationByScenario', {
                 scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                 callback: function (response) {
+                    console.log('get recommendation data');
                     console.log('取得推薦資料:', response);
 
                     renderRecommendations(response);
