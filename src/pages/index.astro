@@ -20,17 +20,14 @@ import Markdown from '../components/Markdown.astro';
             appier(
                 'getRecommendationByScenario',
                 {
-                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55'
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                    num: 100
                 },
                 function (err, RecommendationData, RecommendationMeta) {
                     console.log('[debug] error:', err);
                     console.log('[debug]get recommendation data:', RecommendationData);
                     console.log('[debug]get recommendation meta:', RecommendationMeta);
                     renderRecommendations(RecommendationData);
-                    appier('event', 'recommendation_impression', {
-                        scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                        items: RecommendationData.map((r) => r.productId)
-                    });
                 }
             );
             function renderRecommendations(items) {
