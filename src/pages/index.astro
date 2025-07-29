@@ -25,6 +25,7 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
         </div>
         <script>
             function waitForAppierReady(callback) {
+                console.log(appier);
                 if (typeof appier === 'function' && appier.callmethod) {
                     callback();
                 } else {
