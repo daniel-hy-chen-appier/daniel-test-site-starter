@@ -16,9 +16,8 @@ import Markdown from '../components/Markdown.astro';
             function waitForAppierReady(callback) {
                 console.log('[debug] waitForAppierReady called');
                 console.log('[debug] appier:', appier);
-                console.log('[debug] typeof appier:', typeof appier);
-                console.log('[debug] appier.callmethod:', appier.callmethod);
-                if (typeof appier === 'function' && appier.callmethod) {
+                console.log('[debug] typeof appier:', typeof appier, typeof appier === 'function');
+                if (typeof appier === 'function') {
                     callback();
                 } else {
                     setTimeout(() => waitForAppierReady(callback), 100);
