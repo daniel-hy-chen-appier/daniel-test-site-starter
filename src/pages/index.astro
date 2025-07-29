@@ -17,9 +17,12 @@ import Markdown from '../components/Markdown.astro';
                 app_id: '41a20648e34aaaad4d7e',
                 platform: 'WEB'
             });
-            appier('getRecommendationByScenario', {
-                scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                callback: function (response) {
+            appier(
+                'getRecommendationByScenario',
+                {
+                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55'
+                },
+                function (response) {
                     console.log('[debug]get recommendation data:', response);
 
                     renderRecommendations(response.items);
@@ -28,7 +31,7 @@ import Markdown from '../components/Markdown.astro';
                         items: response.items.map((r) => r.productId)
                     });
                 }
-            });
+            );
             function renderRecommendations(items) {
                 console.log('[debug]Rendering recommendations:', items);
                 const container = document.getElementById('rec-list');
