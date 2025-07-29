@@ -18,35 +18,41 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
     <p>
         <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
     </p>
-    <script>
-        appier('init', {
-            app_id: '41a20648e34aaaad4d7e', // 這個很重要，需向 Appier 拿
-            platform: 'WEB'
-        });
-        appier('getRecommendationByScenario', {
-            scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-            callback: function (response) {
-                console.log('取得推薦資料:', response);
+    <div class="mt-10">
+        <h2 class="mb-4">Recommendations</h2>
+        <div id="rec-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Recommendations will be rendered here -->
+        </div>
+        <script>
+            appier('init', {
+                app_id: '41a20648e34aaaad4d7e',
+                platform: 'WEB'
+            });
+            appier('getRecommendationByScenario', {
+                scenarioId: 'LTt6bgqroyaJCdcJQfd5Wt',
+                callback: function (response) {
+                    console.log('取得推薦資料:', response);
 
-                renderRecommendations(response);
-                appier('event', 'recommendation_impression', {
-                    scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                    items: res.recommendations.map((r) => r.item_id)
-                });
-            }
-        });
-        function renderRecommendations(items) {
-            const container = document.getElementById('rec-list');
-            container.innerHTML = items
-                .map(
-                    (item) => `
+                    renderRecommendations(response);
+                    appier('event', 'recommendation_impression', {
+                        scenarioId: 'LTt6bgqroyaJCdcJQfd5Wt',
+                        items: response.recommendations.map((r) => r.item_id)
+                    });
+                }
+            });
+            function renderRecommendations(items) {
+                const container = document.getElementById('rec-list');
+                container.innerHTML = items
+                    .map(
+                        (item) => `
             <div class="product">
                 <img src="${item.image}" alt="${item.title}" />
                 <p>${item.title}</p>
             </div>
         `
-                )
-                .join('');
-        }
-    </script>
+                    )
+                    .join('');
+            }
+        </script>
+    </div>
 </Layout>
