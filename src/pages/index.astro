@@ -13,55 +13,24 @@ import Markdown from '../components/Markdown.astro';
             <!-- Recommendations will be rendered here -->
         </div>
         <script>
-            function waitForAppierReady(callback) {
-                console.log('[debug] waitForAppierReady called');
-                console.log('[debug] appier:', appier);
-                console.log('[debug] typeof appier:', typeof appier, typeof appier === 'function');
-                if (typeof appier === 'function') {
-                    callback();
-                } else {
-                    setTimeout(() => waitForAppierReady(callback), 100);
-                }
-            }
             appier('init', {
                 app_id: '41a20648e34aaaad4d7e',
                 platform: 'WEB'
             });
-            // waitForAppierReady(() => {
-            //     appier('getRecommendationByScenario', {
-            //         scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-            //         callback: function (response) {
-            //             if (!response || !response.recommendations || response.recommendations.length === 0) {
-            //                 console.warn('not recommendation data', response);
-            //                 return;
-            //             }
-            //             console.log('get recommendation data:', response);
-
-            //             renderRecommendations(response);
-            //             appier('event', 'recommendation_impression', {
-            //                 scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-            //                 items: response.recommendations.map((r) => r.item_id)
-            //             });
-            //         }
-            //     });
-            // });
             appier('getRecommendationByScenario', {
                 scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                 callback: function (response) {
-                    if (!response || !response.items || response.items.length === 0) {
-                        console.warn('not recommendation data', response);
-                        return;
-                    }
                     console.log('get recommendation data:', response);
 
-                    renderRecommendations(response);
+                    renderRecommendations(response.items);
                     appier('event', 'recommendation_impression', {
                         scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                        items: response.items.map((r) => r.productId) // ✅ 根據回傳欄位調整
+                        items: response.items.map((r) => r.productId)
                     });
                 }
             });
             function renderRecommendations(items) {
+                console.log('Rendering recommendations:', items);
                 const container = document.getElementById('rec-list');
                 if (!container) return;
 
