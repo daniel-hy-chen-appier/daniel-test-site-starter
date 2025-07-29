@@ -55,18 +55,24 @@ import Markdown from '../components/Markdown.astro';
                     console.log('get recommendation data:', response);
 
                     renderRecommendations(response);
+                    appier('event', 'recommendation_impression', {
+                        scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
+                        items: response.items.map((r) => r.productId) // ✅ 根據回傳欄位調整
+                    });
                 }
             });
             function renderRecommendations(items) {
                 const container = document.getElementById('rec-list');
+                if (!container) return;
+
                 container.innerHTML = items
                     .map(
                         (item) => `
-            <div class="product">
-                <img src="${item.image}" alt="${item.title}" />
-                <p>${item.title}</p>
-            </div>
-        `
+    <div class="product">
+      <img src="${item.image}" alt="${item.title}" />
+      <p>${item.title}</p>
+    </div>
+  `
                     )
                     .join('');
             }
