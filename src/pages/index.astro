@@ -48,17 +48,13 @@ import Markdown from '../components/Markdown.astro';
             appier('getRecommendationByScenario', {
                 scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                 callback: function (response) {
-                    if (!response || !response.recommendations || response.recommendations.length === 0) {
+                    if (!response || !response.items || response.items.length === 0) {
                         console.warn('not recommendation data', response);
                         return;
                     }
                     console.log('get recommendation data:', response);
 
                     renderRecommendations(response);
-                    appier('event', 'recommendation_impression', {
-                        scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
-                        items: response.recommendations.map((r) => r.item_id)
-                    });
                 }
             });
             function renderRecommendations(items) {
