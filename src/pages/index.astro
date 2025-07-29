@@ -18,8 +18,27 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
     <p>
         <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
     </p>
-    <ul id="recommendation-list"></ul>
-    <p>
-        <button class="btn btn-primary mt-6" type="button" onclick="loadRecommendation()"> Load Recommendation </button>
-    </p>
+    <section>
+        <h2 class="mb-4">推薦商品</h2>
+        <ul id="recommendation-list" class="space-y-2"></ul>
+    </section>
+
+    <script type="module" client:load>
+        window.RecommendationSDK?.getRecommendations({
+            scenario: 'homepage',
+            onSuccess: (products) => {
+                const container = document.getElementById('recommendation-list');
+                if (container && products?.length) {
+                    container.innerHTML = products.map((item) => `<li>${item.name}</li>`).join('');
+                }
+                window.RecommendationSDK?.trackEvent('recommendation_impression', {
+                    scenario: 'homepage',
+                    items: products.map((p) => p.id)
+                });
+            },
+            onError: (err) => {
+                console.error('Recommendation error:', err);
+            }
+        });
+    </script>
 </Layout>
