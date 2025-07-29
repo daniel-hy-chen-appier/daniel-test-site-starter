@@ -20,7 +20,7 @@ import Markdown from '../components/Markdown.astro';
             appier('getRecommendationByScenario', {
                 scenarioId: 'hEtzh8MBoGc65hX9xAPb55',
                 callback: function (response) {
-                    console.log('get recommendation data:', response);
+                    console.log('[debug]get recommendation data:', response);
 
                     renderRecommendations(response.items);
                     appier('event', 'recommendation_impression', {
@@ -30,7 +30,7 @@ import Markdown from '../components/Markdown.astro';
                 }
             });
             function renderRecommendations(items) {
-                console.log('Rendering recommendations:', items);
+                console.log('[debug]Rendering recommendations:', items);
                 const container = document.getElementById('rec-list');
                 if (!container) return;
 
